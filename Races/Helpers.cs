@@ -1,14 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 using GTA;
 using GTA.Math;
+using GTA.Native;
+using NativeUI;
 
 namespace Races
 {
     public static class Helpers
     {
+        public static void CountdownRace
+            (
+            ref DateTime _lasttime,
+            ref uint _seconds,
+            ref bool _isInRace,
+            ref int _countdown,
+            ref Sprite _fadeoutSprite,
+            List<Vehicle> _participants,
+            ref uint _missionStart
+            )
+        {
+            if (DateTime.Now.Second != _lasttime.Second)
+            {
+                _seconds++;
+                _lasttime = DateTime.Now;
+                if (_isInRace && _countdown > 0)
+                {
+                    var screen = UIMenu.GetScreenResolutionMantainRatio();
+                    var w = Convert.ToInt32(screen.Width / 2);
+                    _countdown--;
+                    if (_countdown > 3) return;
+                    _fadeoutSprite = new Sprite(
+                        "mpinventory",
+                        "in_world_circle",
+                        new Point(w - 125, 200),
+                        new Size(250, 250), 0f,
+                        _countdown == 0 ? Color.FromArgb(49, 235, 126) : Color.FromArgb(241, 247, 57)
+                        );
+                    Function.Call(Hash.REQUEST_SCRIPT_AUDIO_BANK, "HUD_MINI_GAME_SOUNDSET", true);
+                    Function.Call(Hash.PLAY_SOUND_FRONTEND, 0, "CHECKPOINT_NORMAL", "HUD_MINI_GAME_SOUNDSET");
+                    if (_countdown == 0)
+                    {
+                        _participants.ForEach(car => car.FreezePosition = false);
+                        _missionStart = _seconds;
+                    }
+                }
+                else if (_isInRace && _countdown == 0)
+                {
+                    _countdown = -1;
+                }
+            }
+        }
+
         public static int LoadRaces(List<Race> _races)
         {
             int counter = 0;
@@ -31,7 +77,7 @@ namespace Races
             ref int _countdown,
             List<Vehicle> _participants,
             ref List<Vector3> _checkpoints,
-            ref Blip _nextBlip, 
+            ref Blip _nextBlip,
             ref Blip _secondBlip,
             ref bool _isInRace,
             ref Race _currentRace,

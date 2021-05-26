@@ -140,30 +140,39 @@ namespace Races
 
         public void OnTick(object sender, EventArgs e)
         {
-            if (DateTime.Now.Second != _lasttime.Second)
-            {
-                _seconds++;
-                _lasttime = DateTime.Now;
-                if (_isInRace && _countdown > 0)
-                {
-                    var screen = UIMenu.GetScreenResolutionMantainRatio();
-                    var w = Convert.ToInt32(screen.Width / 2);
-                    _countdown--;
-                    if (_countdown > 3) return;
-                    _fadeoutSprite = new Sprite("mpinventory", "in_world_circle", new Point(w - 125, 200), new Size(250, 250), 0f, _countdown == 0 ? Color.FromArgb(49, 235, 126) : Color.FromArgb(241, 247, 57));
-                    Function.Call(Hash.REQUEST_SCRIPT_AUDIO_BANK, "HUD_MINI_GAME_SOUNDSET", true);
-                    Function.Call(Hash.PLAY_SOUND_FRONTEND, 0, "CHECKPOINT_NORMAL", "HUD_MINI_GAME_SOUNDSET");
-                    if (_countdown == 0)
-                    {
-                        _participants.ForEach(car => car.FreezePosition = false);
-                        _missionStart = _seconds;
-                    }
-                }
-                else if (_isInRace && _countdown == 0)
-                {
-                    _countdown = -1;
-                }
-            }
+            //if (DateTime.Now.Second != _lasttime.Second)
+            //{
+            //    _seconds++;
+            //    _lasttime = DateTime.Now;
+            //    if (_isInRace && _countdown > 0)
+            //    {
+            //        var screen = UIMenu.GetScreenResolutionMantainRatio();
+            //        var w = Convert.ToInt32(screen.Width / 2);
+            //        _countdown--;
+            //        if (_countdown > 3) return;
+            //        _fadeoutSprite = new Sprite("mpinventory", "in_world_circle", new Point(w - 125, 200), new Size(250, 250), 0f, _countdown == 0 ? Color.FromArgb(49, 235, 126) : Color.FromArgb(241, 247, 57));
+            //        Function.Call(Hash.REQUEST_SCRIPT_AUDIO_BANK, "HUD_MINI_GAME_SOUNDSET", true);
+            //        Function.Call(Hash.PLAY_SOUND_FRONTEND, 0, "CHECKPOINT_NORMAL", "HUD_MINI_GAME_SOUNDSET");
+            //        if (_countdown == 0)
+            //        {
+            //            _participants.ForEach(car => car.FreezePosition = false);
+            //            _missionStart = _seconds;
+            //        }
+            //    }
+            //    else if (_isInRace && _countdown == 0)
+            //    {
+            //        _countdown = -1;
+            //    }
+            //}
+            Helpers.CountdownRace(
+                ref _lasttime,
+                ref _seconds,
+                ref _isInRace,
+                ref _countdown,
+                ref _fadeoutSprite,
+                _participants,
+                ref _missionStart
+                );
 
             GUI.MainMenu.ProcessControl();
             GUI.MainMenu.ProcessMouse();
