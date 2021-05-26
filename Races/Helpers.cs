@@ -10,7 +10,6 @@ using NativeUI;
 
 namespace Races
 {
-
     public static class Helpers
     {
         public static void CountdownRace
