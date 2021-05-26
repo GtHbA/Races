@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GTA;
 using GTA.Math;
 
@@ -6,6 +7,42 @@ namespace Races
 {
     public static class Helpers
     {
+        public static void EndRace(
+            List<Rival> _finishedParticipants,
+            List<Rival> _currentRivals,
+            int _countdown,
+            List<Vehicle> _participants,
+            List<Vector3> _checkpoints,
+            Blip _nextBlip, Blip _secondBlip,
+            bool _isInRace,
+            Race _currentRace,
+            List<Entity> _cleanupBag,
+            List<Tuple<Rival, int>> _rivalCheckpointStatus
+            )
+        {
+            _isInRace = false;
+            _currentRace = null;
+
+            _secondBlip?.Remove();
+            _nextBlip?.Remove();
+            _checkpoints.Clear();
+            foreach (Entity entity in _cleanupBag)
+            {
+                //commented that don't remove player vehicle
+                //entity?.Delete();
+            }
+            _cleanupBag.Clear();
+            _participants.Clear();
+            _countdown = -1;
+            foreach (Rival rival in _currentRivals)
+            {
+                rival.Clean();
+            }
+            _currentRivals.Clear();
+            _rivalCheckpointStatus.Clear();
+            _finishedParticipants.Clear();
+        }
+
         public static Vector3 RotationToDirection(Vector3 rotation)
         {
             var z = DegToRad(rotation.Z);

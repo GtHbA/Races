@@ -58,7 +58,9 @@ namespace Races
                 Game.FadeScreenOut(500);
                 Wait(1000);
                 //Game.Player.Character.Position = _currentRace.Trigger;
-                EndRace();
+                //EndRace();
+                Helpers.EndRace(_finishedParticipants, _currentRivals, _countdown, _participants, _checkpoints, _nextBlip, _secondBlip, _isInRace, _currentRace, _cleanupBag, _rivalCheckpointStatus);
+
                 Game.FadeScreenIn(500);
             };
             _quitMenu.AddItem(qitem);
@@ -80,30 +82,31 @@ namespace Races
             UI.Notify("~b~~h~Races~h~~n~~w~Loaded ~b~" + racesLoaded + "~w~ race(s).");
         }
 
-        private void EndRace()
-        {
-            _isInRace = false;
-            _currentRace = null;
+        
+        //private void EndRace()
+        //{
+        //    _isInRace = false;
+        //    _currentRace = null;
 
-            _secondBlip?.Remove();
-            _nextBlip?.Remove();
-            _checkpoints.Clear();
-            foreach (Entity entity in _cleanupBag)
-            {
-                //commented that don't remove player vehicle
-                //entity?.Delete();
-            }
-            _cleanupBag.Clear();
-            _participants.Clear();
-            _countdown = -1;
-            foreach (Rival rival in _currentRivals)
-            {
-                rival.Clean();
-            }
-            _currentRivals.Clear();
-            _rivalCheckpointStatus.Clear();
-            _finishedParticipants.Clear();
-        }
+        //    _secondBlip?.Remove();
+        //    _nextBlip?.Remove();
+        //    _checkpoints.Clear();
+        //    foreach (Entity entity in _cleanupBag)
+        //    {
+        //        //commented that don't remove player vehicle
+        //        //entity?.Delete();
+        //    }
+        //    _cleanupBag.Clear();
+        //    _participants.Clear();
+        //    _countdown = -1;
+        //    foreach (Rival rival in _currentRivals)
+        //    {
+        //        rival.Clean();
+        //    }
+        //    _currentRivals.Clear();
+        //    _rivalCheckpointStatus.Clear();
+        //    _finishedParticipants.Clear();
+        //}
 
         private int LoadRaces()
         {
@@ -345,7 +348,9 @@ namespace Races
                             Game.Player.Character.CurrentVehicle.HandbrakeOn = false;
                             Game.Player.CanControlCharacter = true;
                             World.RenderingCamera = null;
-                            EndRace();
+                            //EndRace();
+                            Helpers.EndRace(_finishedParticipants, _currentRivals, _countdown, _participants, _checkpoints, _nextBlip, _secondBlip, _isInRace, _currentRace, _cleanupBag, _rivalCheckpointStatus);
+
                             _passed = null;
                             Game.FadeScreenIn(1500);
                             Money.AddMoney(1000, score);
