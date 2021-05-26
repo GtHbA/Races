@@ -12,7 +12,7 @@ namespace Races
 {
     public static class Helpers
     {
-        public static void StartingPointRace(Race race)
+        public static void StartingPointRace(Race race, ref float _oldAngle)
         {
             World.DrawMarker(
                         MarkerType.VerticalCylinder,
@@ -22,6 +22,20 @@ namespace Races
                         new Vector3(5f, 5f, 1f),
                         Color.FromArgb(200, 255, 255, 255)
                         );
+
+            var tmpSF = new Scaleform(0);
+            tmpSF.Load("PLAYER_NAME_01");
+            tmpSF.CallFunction("SET_PLAYER_NAME", race.Name);
+
+            tmpSF.Render3D(race.Trigger + new Vector3(0f, 0f, 2f), new Vector3(0f, 0f, _oldAngle), new Vector3(12, 6, 2));
+
+            var tmpT = new Scaleform(0);
+            tmpT.Load("PLAYER_NAME_02");
+            tmpT.CallFunction("SET_PLAYER_NAME", "Community Race");
+
+            tmpT.Render3D(race.Trigger + new Vector3(0f, 0f, 1.5f), new Vector3(0f, 0f, _oldAngle), new Vector3(6, 3, 1));
+
+            _oldAngle += 2f;
         }
         public static void CountdownRace
             (

@@ -205,6 +205,7 @@ namespace Races
                 if (GUI.IsInMenu) return;
                 foreach (var race in _races)
                 {
+                    if (!Game.Player.Character.IsInRangeOf(race.Trigger, 50f)) continue;
                     //World.DrawMarker(
                     //    MarkerType.VerticalCylinder,
                     //    race.Trigger,
@@ -213,22 +214,24 @@ namespace Races
                     //    new Vector3(5f, 5f, 1f),
                     //    Color.FromArgb(200, 255, 255, 255)
                     //    );
-                    Helpers.StartingPointRace(race);
 
-                    if (!Game.Player.Character.IsInRangeOf(race.Trigger, 50f)) continue;
-                    var tmpSF = new Scaleform(0);
-                    tmpSF.Load("PLAYER_NAME_01");
-                    tmpSF.CallFunction("SET_PLAYER_NAME", race.Name);
 
-                    tmpSF.Render3D(race.Trigger + new Vector3(0f, 0f, 2f), new Vector3(0f, 0f, _oldAngle), new Vector3(12, 6, 2));
+                    //if (!Game.Player.Character.IsInRangeOf(race.Trigger, 50f)) continue;
 
-                    var tmpT = new Scaleform(0);
-                    tmpT.Load("PLAYER_NAME_02");
-                    tmpT.CallFunction("SET_PLAYER_NAME", "Community Race");
+                    //var tmpSF = new Scaleform(0);
+                    //tmpSF.Load("PLAYER_NAME_01");
+                    //tmpSF.CallFunction("SET_PLAYER_NAME", race.Name);
 
-                    tmpT.Render3D(race.Trigger + new Vector3(0f, 0f, 1.5f), new Vector3(0f, 0f, _oldAngle), new Vector3(6, 3, 1));
+                    //tmpSF.Render3D(race.Trigger + new Vector3(0f, 0f, 2f), new Vector3(0f, 0f, _oldAngle), new Vector3(12, 6, 2));
 
-                    _oldAngle += 2f;
+                    //var tmpT = new Scaleform(0);
+                    //tmpT.Load("PLAYER_NAME_02");
+                    //tmpT.CallFunction("SET_PLAYER_NAME", "Community Race");
+
+                    //tmpT.Render3D(race.Trigger + new Vector3(0f, 0f, 1.5f), new Vector3(0f, 0f, _oldAngle), new Vector3(6, 3, 1));
+
+                    //_oldAngle += 2f;
+                    Helpers.StartingPointRace(race, ref _oldAngle);
 
                     if (!Game.Player.Character.IsInRangeOf(race.Trigger, 5f)) continue;
 
