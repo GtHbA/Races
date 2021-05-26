@@ -47,7 +47,8 @@ namespace Races
         public MainScriptRaces()
         {
             Tick += OnTick;
-            int racesLoaded = LoadRaces();
+            //int racesLoaded = LoadRaces();
+            int racesLoaded = Helpers.LoadRaces(_races);
 
             _quitMenu = new UIMenu("", "~r~ARE YOU SURE YOU WANT TO QUIT?", new Point(0, -107));
             var qitem = new UIMenuItem("Quit current race.");
@@ -82,7 +83,7 @@ namespace Races
             UI.Notify("~b~~h~Races~h~~n~~w~Loaded ~b~" + racesLoaded + "~w~ race(s).");
         }
 
-        
+
         //private void EndRace()
         //{
         //    _isInRace = false;
@@ -108,21 +109,21 @@ namespace Races
         //    _finishedParticipants.Clear();
         //}
 
-        private int LoadRaces()
-        {
-            int counter = 0;
-            if (!Directory.Exists("scripts\\Races")) return 0;
-            foreach (string path in Directory.GetFiles("scripts\\Races", "*.xml"))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(Race));
-                StreamReader file = new StreamReader(path);
-                var raceout = (Race)serializer.Deserialize(file);
-                file.Close();
-                _races.Add(raceout);
-                counter++;
-            }
-            return counter;
-        }
+        //private int LoadRaces()
+        //{
+        //    int counter = 0;
+        //    if (!Directory.Exists("scripts\\Races")) return 0;
+        //    foreach (string path in Directory.GetFiles("scripts\\Races", "*.xml"))
+        //    {
+        //        XmlSerializer serializer = new XmlSerializer(typeof(Race));
+        //        StreamReader file = new StreamReader(path);
+        //        var raceout = (Race)serializer.Deserialize(file);
+        //        file.Close();
+        //        _races.Add(raceout);
+        //        counter++;
+        //    }
+        //    return counter;
+        //}
 
         public void OnTick(object sender, EventArgs e)
         {

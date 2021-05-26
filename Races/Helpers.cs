@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 using GTA;
 using GTA.Math;
 
@@ -7,6 +9,22 @@ namespace Races
 {
     public static class Helpers
     {
+        public static int LoadRaces(List<Race> _races)
+        {
+            int counter = 0;
+            if (!Directory.Exists("scripts\\Races")) return 0;
+            foreach (string path in Directory.GetFiles("scripts\\Races", "*.xml"))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Race));
+                StreamReader file = new StreamReader(path);
+                var raceout = (Race)serializer.Deserialize(file);
+                file.Close();
+                _races.Add(raceout);
+                counter++;
+            }
+            return counter;
+        }
+
         public static void EndRace(
             List<Rival> _finishedParticipants,
             List<Rival> _currentRivals,
