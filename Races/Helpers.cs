@@ -12,6 +12,17 @@ namespace Races
 {
     public static class Helpers
     {
+        public static void StartingPointRace(Race race)
+        {
+            World.DrawMarker(
+                        MarkerType.VerticalCylinder,
+                        race.Trigger,
+                        new Vector3(0, 0, 0),
+                        new Vector3(0, 0, 0),
+                        new Vector3(5f, 5f, 1f),
+                        Color.FromArgb(200, 255, 255, 255)
+                        );
+        }
         public static void CountdownRace
             (
             ref DateTime _lasttime,

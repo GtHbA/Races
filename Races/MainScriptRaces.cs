@@ -205,7 +205,16 @@ namespace Races
                 if (GUI.IsInMenu) return;
                 foreach (var race in _races)
                 {
-                    World.DrawMarker(MarkerType.VerticalCylinder, race.Trigger, new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(5f, 5f, 1f), Color.FromArgb(200, 255, 255, 255));
+                    //World.DrawMarker(
+                    //    MarkerType.VerticalCylinder,
+                    //    race.Trigger,
+                    //    new Vector3(0, 0, 0),
+                    //    new Vector3(0, 0, 0),
+                    //    new Vector3(5f, 5f, 1f),
+                    //    Color.FromArgb(200, 255, 255, 255)
+                    //    );
+                    Helpers.StartingPointRace(race);
+
                     if (!Game.Player.Character.IsInRangeOf(race.Trigger, 50f)) continue;
                     var tmpSF = new Scaleform(0);
                     tmpSF.Load("PLAYER_NAME_01");
