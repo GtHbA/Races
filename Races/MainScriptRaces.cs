@@ -216,7 +216,7 @@ namespace Races
                     //    );
 
 
-                    //if (!Game.Player.Character.IsInRangeOf(race.Trigger, 50f)) continue;
+                    //if (!Game.Player.Character.IsInRangeOf(race.Trigger, 50f)) continue; //origin position
 
                     //var tmpSF = new Scaleform(0);
                     //tmpSF.Load("PLAYER_NAME_01");
