@@ -28,12 +28,13 @@ namespace Races
         public static void EndRace(
             List<Rival> _finishedParticipants,
             List<Rival> _currentRivals,
-            int _countdown,
+            ref int _countdown,
             List<Vehicle> _participants,
-            List<Vector3> _checkpoints,
-            Blip _nextBlip, Blip _secondBlip,
-            bool _isInRace,
-            Race _currentRace,
+            ref List<Vector3> _checkpoints,
+            ref Blip _nextBlip, 
+            ref Blip _secondBlip,
+            ref bool _isInRace,
+            ref Race _currentRace,
             List<Entity> _cleanupBag,
             List<Tuple<Rival, int>> _rivalCheckpointStatus
             )

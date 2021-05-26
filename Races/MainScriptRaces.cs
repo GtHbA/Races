@@ -60,7 +60,20 @@ namespace Races
                 Wait(1000);
                 //Game.Player.Character.Position = _currentRace.Trigger;
                 //EndRace();
-                Helpers.EndRace(_finishedParticipants, _currentRivals, _countdown, _participants, _checkpoints, _nextBlip, _secondBlip, _isInRace, _currentRace, _cleanupBag, _rivalCheckpointStatus);
+                Helpers.EndRace
+                (
+                    _finishedParticipants,
+                    _currentRivals,
+                    ref _countdown,
+                    _participants,
+                    ref _checkpoints,
+                    ref _nextBlip,
+                    ref _secondBlip,
+                    ref _isInRace,
+                    ref _currentRace,
+                    _cleanupBag,
+                    _rivalCheckpointStatus
+                );
 
                 Game.FadeScreenIn(500);
             };
@@ -350,7 +363,20 @@ namespace Races
                             Game.Player.CanControlCharacter = true;
                             World.RenderingCamera = null;
                             //EndRace();
-                            Helpers.EndRace(_finishedParticipants, _currentRivals, _countdown, _participants, _checkpoints, _nextBlip, _secondBlip, _isInRace, _currentRace, _cleanupBag, _rivalCheckpointStatus);
+                            Helpers.EndRace
+                            (
+                                _finishedParticipants,
+                                _currentRivals,
+                                ref _countdown,
+                                _participants,
+                                ref _checkpoints,
+                                ref _nextBlip,
+                                ref _secondBlip,
+                                ref _isInRace,
+                                ref _currentRace,
+                                _cleanupBag,
+                                _rivalCheckpointStatus
+                            );
 
                             _passed = null;
                             Game.FadeScreenIn(1500);
